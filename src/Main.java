@@ -14,7 +14,7 @@ public class Main {
         service.printClassrooms();
         service.printCourses();
         service.createQuiz();
-        service.addQuestionToQuiz("Cat fac 1 + 1?", 0);
+        service.addQuestionToQuiz(new Question("Cat fac 1 + 1?", "2"), 0);
     }   
 
    

@@ -7,8 +7,8 @@ Student
 Administrator
 Course
 Quiz
-Subject
 Classroom
+Question
 
 ServiceClass
 Main

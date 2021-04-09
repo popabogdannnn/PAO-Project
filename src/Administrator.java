@@ -62,7 +62,7 @@ public class Administrator extends User {
         this.quizList.add(quiz);
     }
 
-    public void addQuestionToQuiz(String question, Quiz quiz) {
+    public void addQuestionToQuiz(Question question, Quiz quiz) {
         quiz.addQuestion(question);
     }
 }

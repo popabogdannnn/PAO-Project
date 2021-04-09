@@ -76,7 +76,7 @@ public class ServiceClass {
     }
 
 
-    public void addQuestionToQuiz(String question, int quizID) {
+    public void addQuestionToQuiz(Question question, int quizID) {
         for(int i = 0; i < quizList.size(); i++) {
             if(quizList.get(i).getQuizID() == quizID) {
                 admin.addQuestionToQuiz(question, quizList.get(i));

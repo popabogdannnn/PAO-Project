@@ -2,12 +2,12 @@ import java.util.ArrayList;
 
 public class Quiz {
     
-    private ArrayList <String> questions;
+    private ArrayList <Question> questions;
     private static int quizID = 0;
     private int myQuizID;
 
     public Quiz() {
-        questions = new ArrayList<String>();
+        questions = new ArrayList<Question>();
         myQuizID = quizID++;
     }
 
@@ -19,7 +19,7 @@ public class Quiz {
         return this.myQuizID;
     }
 
-    public void addQuestion(String question) {
+    public void addQuestion(Question question) {
         this.questions.add(question);
     }
 
