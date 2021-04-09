@@ -1,4 +1,6 @@
 public class Main {
+
+    
     public static void main(String[] args) throws Exception {
         ServiceClass service = new ServiceClass();
         
@@ -11,6 +13,10 @@ public class Main {
         service.printUsernames();
         service.printClassrooms();
         service.printCourses();
-    }
+        service.createQuiz();
+        service.addQuestionToQuiz("Cat fac 1 + 1?", 0);
+    }   
+
+   
 
 }

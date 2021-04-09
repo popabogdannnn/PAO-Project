@@ -7,12 +7,14 @@ public class ServiceClass {
     private TreeSet <User> userList;
     private ArrayList <Course> courseList;
     private ArrayList <Classroom> classroomList; 
+    private ArrayList <Quiz> quizList;
 
     public ServiceClass() {
         userList = new TreeSet <User>(new UserCompare());
         courseList = new ArrayList <Course>();
         classroomList = new ArrayList<Classroom>();
-        admin = new Administrator("admin", "admin", "admin", courseList, userList, classroomList);
+        quizList = new ArrayList <Quiz>();
+        admin = new Administrator("admin", "admin", "admin", courseList, userList, classroomList, quizList);
     }
 
     public void printUsernames() {
@@ -68,4 +70,17 @@ public class ServiceClass {
         }
     }
 
+    public void createQuiz() {
+        Quiz quiz = new Quiz();
+        admin.addQuiz(quiz);
+    }
+
+
+    public void addQuestionToQuiz(String question, int quizID) {
+        for(int i = 0; i < quizList.size(); i++) {
+            if(quizList.get(i).getQuizID() == quizID) {
+                admin.addQuestionToQuiz(question, quizList.get(i));
+            }
+        }
+    }
 }
