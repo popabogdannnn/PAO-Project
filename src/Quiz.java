@@ -11,7 +11,7 @@ public class Quiz {
         myQuizID = quizID++;
     }
 
-    public ArrayList<String> getQuestions() {
+    public ArrayList<Question> getQuestions() {
         return this.questions;
     }
 

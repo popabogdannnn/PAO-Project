@@ -83,4 +83,9 @@ public class ServiceClass {
             }
         }
     }
+
+    public void loadData() {
+        Reader reader = Reader.getInstance();
+        reader.test();
+    }
 }
