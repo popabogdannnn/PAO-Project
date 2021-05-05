@@ -1,10 +1,10 @@
+
 public class Main {
     public static void main(String[] args) throws Exception {
         ServiceClass service = new ServiceClass();
 
         service.loadData();
 
-        /*
         service.createClassroom("Grupa 234");
         service.createStudent("sura", "alex", "beica", "Grupa 234");
         service.createStudent("nastut", "alex", "nasta", "Grupa 234");
@@ -16,9 +16,5 @@ public class Main {
         service.printCourses();
         service.createQuiz();
         service.addQuestionToQuiz(new Question("Cat fac 1 + 1?", "2"), 0);
-        */
-
-
-
     }
 }

@@ -1,5 +1,9 @@
 import java.io.*;
+import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class Reader {
 
@@ -9,12 +13,14 @@ public class Reader {
     private File fQuestion;
     private File fInstructor;
     private File fStudent;
+    private File fAudit;
 
     private Reader() {
         this.fClassroom = new File("csv/classroom.csv");
         this.fQuestion = new File("csv/question.csv");
         this.fInstructor = new File("csv/instructor.csv");
         this.fStudent = new File("csv/student.csv");
+        this.fAudit = new File("csv/audit.csv");
     }
 
     public static Reader getInstance() {
@@ -40,20 +46,36 @@ public class Reader {
     }
 
     public void readClassrooms() {
+
         this.readFile(this.fClassroom);
     }
 
     public void readQuestions() {
+
         this.readFile(this.fQuestion);
     }
 
     public void readInstructors() {
+
         this.readFile(this.fInstructor);
     }
 
     public void readStudents() {
+
         this.readFile(this.fStudent);
     }
+
+    public void audit(String s) {
+        try {
+            FileWriter fw = new FileWriter("csv/audit.csv", true);
+            Date date = new Date();
+            fw.write(s + "," + new Timestamp(date.getTime()) + "\n");
+            fw.close();
+        } catch (Exception e) {
+            System.out.println("Exceptie la audit");
+        }
+    }
+
 
     public void test() {
         try {
