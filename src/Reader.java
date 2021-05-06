@@ -31,38 +31,63 @@ public class Reader {
     }
 
 
-    private ArrayList <String> readFile(File f) {
-        ArrayList <String> ret = new ArrayList<String>();
+    private ArrayList <String[]> readFile(File f) {
+        ArrayList <String[]> ret = new ArrayList<String[]>();
         try {
-        BufferedReader fin = new BufferedReader(new FileReader(this.fClassroom));
+        BufferedReader fin = new BufferedReader(new FileReader(f));
 
-            for (String line = fin.readLine(); fin != null; line = fin.readLine()) {
-                ret.add(line);
+            for (String line = fin.readLine(); line != null; line = fin.readLine()) {
+                String[] splitLine = line.split(",");
+                ret.add(splitLine);
             }
         } catch(Exception e) {
-            System.out.println("Salut n-am deschis " + f.getName());
+            System.out.println("Exceptie la citire " + f.getName());
         }
         return ret;
     }
 
-    public void readClassrooms() {
-
-        this.readFile(this.fClassroom);
+    public ArrayList<String[]> readClassrooms() {
+        return this.readFile(this.fClassroom);
     }
 
-    public void readQuestions() {
-
-        this.readFile(this.fQuestion);
+    public ArrayList<String[]> readQuestions() {
+        return this.readFile(this.fQuestion);
     }
 
-    public void readInstructors() {
-
-        this.readFile(this.fInstructor);
+    public ArrayList<String[]> readInstructors() {
+        return this.readFile(this.fInstructor);
     }
 
-    public void readStudents() {
+    public ArrayList<String[]> readStudents() {
+        return this.readFile(this.fStudent);
+    }
 
-        this.readFile(this.fStudent);
+    private void writeInFile(ArrayList<String> lines, File f) {
+        try {
+            FileWriter fw = new FileWriter("csv/" + f.getName());
+            for(int i = 0; i < lines.size(); i++) {
+                fw.write(lines.get(i) + "\n");
+            }
+            fw.close();
+        } catch(Exception e) {
+            System.out.println("Exceptie la scriere " + f.getName());
+        }
+    }
+
+    public void writeClassrooms(ArrayList<String> lines) {
+        this.writeInFile(lines, fClassroom);
+    }
+
+    public void writeQuestions(ArrayList<String> lines) {
+        this.writeInFile(lines, fQuestion);
+    }
+
+    public void writeInstructors(ArrayList<String> lines) {
+        this.writeInFile(lines, fInstructor);
+    }
+
+    public void writeStudents(ArrayList<String> lines) {
+        this.writeInFile(lines, fStudent);
     }
 
     public void audit(String s) {
@@ -81,7 +106,6 @@ public class Reader {
         try {
             BufferedReader fin = new BufferedReader(new FileReader(this.fClassroom));
             String x = fin.readLine();
-            System.out.println(x);
         } catch (Exception e) {
             System.out.println("Salut n-am deschis");
         }

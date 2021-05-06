@@ -7,14 +7,16 @@ public class Administrator extends User {
     private TreeSet <User> userList;
     private ArrayList <Classroom> classroomList; 
     private ArrayList <Quiz> quizList;
+    private ArrayList <Question> questionList;
     Reader reader;
 
-    public Administrator(String _username, String _firstName, String _lastName, ArrayList <Course> _courseList, TreeSet <User> _userList, ArrayList <Classroom> _classroomList, ArrayList <Quiz> _quizList) {
+    public Administrator(String _username, String _firstName, String _lastName, ArrayList <Course> _courseList, TreeSet <User> _userList, ArrayList <Classroom> _classroomList, ArrayList <Quiz> _quizList, ArrayList<Question> questionList) {
         super(_username, _firstName, _lastName);
         this.courseList = _courseList;
         this.userList = _userList;
         this.classroomList = _classroomList;
         this.quizList = _quizList;
+        this.questionList = questionList;
         reader = Reader.getInstance();
     }   
 
@@ -69,6 +71,11 @@ public class Administrator extends User {
     public void addQuiz(Quiz quiz) {
         reader.audit("addQuiz");
         this.quizList.add(quiz);
+    }
+
+    public void addQuestion(Question question) {
+        reader.audit("addQuestion");
+        this.questionList.add(question);
     }
 
     public void addQuestionToQuiz(Question question, Quiz quiz) {
