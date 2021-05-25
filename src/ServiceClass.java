@@ -1,5 +1,9 @@
+import java.sql.Connection;
+import java.sql.DriverManager;
 import java.util.TreeSet;
 import java.util.ArrayList;
+import java.sql.SQLException;
+import java.sql.*;
 
 public class ServiceClass {
     
@@ -144,5 +148,115 @@ public class ServiceClass {
         reader.writeQuestions(csvQuestions);
     }
 
+
+    public void loadDataFromDB() {
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            String url = "jdbc:mysql://localhost:3306/data";
+            String user = "root";
+            String password = "";
+            Connection conn = DriverManager.getConnection(url, user, password);
+
+            String query = "select * from ";
+
+            var statement = conn.prepareStatement(query + "classroom");
+            ResultSet r = statement.executeQuery();
+            while(r.next()) {
+                String id = r.getString("id");
+                this.createClassroom(id);
+            }
+
+            statement = conn.prepareStatement(query + "instructor");
+            r = statement.executeQuery();
+            while(r.next()) {
+                 String username = r.getString("username");
+                 String nume = r.getString("nume");
+                 String prenume = r.getString("prenume");
+                 this.createInstructor(username, nume, prenume);
+            }
+
+            statement = conn.prepareStatement(query + "question");
+            r = statement.executeQuery();
+            while(r.next()) {
+                String intrebare = r.getString("intrebare");
+                String raspuns = r.getString("raspuns");
+                this.createQuestion(intrebare, raspuns);
+            }
+
+            statement = conn.prepareStatement(query + "student");
+            r = statement.executeQuery();
+            while(r.next()) {
+                String username = r.getString("username");
+                String nume = r.getString("nume");
+                String prenume = r.getString("prenume");
+                String grupa_id = r.getString("grupa_id");
+                this.createStudent(username, nume, prenume, grupa_id);
+            }
+
+
+        } catch(ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void saveDataOnDB() {
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            String url = "jdbc:mysql://localhost:3306/data";
+            String user = "root";
+            String password = "";
+            Connection conn = DriverManager.getConnection(url, user, password);
+
+
+            String[] databases = {
+                    "classroom",
+                    "instructor",
+                    "question",
+                    "student"
+            };
+
+            for(String d : databases) {
+                String query = "insert ignore into " + d + " VALUES ";
+                if(d == "classroom") {
+                    for(int i = 0; i < classroomList.size(); i++) {
+                        var statement = conn.prepareStatement(query + "('" + classroomList.get(i).getClassroomID() + "')");
+                        statement.execute();
+                    }
+                }
+
+                if(d == "instructor") {
+                    for(User u : userList) {
+                        if(u instanceof Instructor) {
+                            var statement = conn.prepareStatement(query + "('" + u.getUsername() + "','" + u.getFirstName() + "','" + u.getLastName() + "')");
+                            statement.execute();
+                        }
+                    }
+                }
+
+                if(d == "student") {
+                    for(User u : userList) {
+                        if(u instanceof Student) {
+                            var statement = conn.prepareStatement(query + "('" + u.getUsername() + "','" + u.getFirstName() + "','" + u.getLastName() + "','" + ((Student) u).getClassroomID() + "')");
+                            statement.execute();
+                        }
+                    }
+                }
+
+                if(d == "question") {
+                    for(Question q : questionList) {
+                        var statement = conn.prepareStatement(query + "('" + q.getStatement() + "','" + q.getCorrectAnswer() + "')");
+                        statement.execute();
+                    }
+                }
+            }
+
+        } catch(ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 
 }
