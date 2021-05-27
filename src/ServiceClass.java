@@ -1,3 +1,4 @@
+import javax.xml.stream.events.StartDocument;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.util.TreeSet;
@@ -27,6 +28,17 @@ public class ServiceClass {
         for(User user : userList) {
             System.out.println(user.getUsername());
         }
+    }
+
+    public void updateStudent(String _username, String _firstName, String _lastName, String _classroomID) {
+        Student stud = new Student(_username, _firstName, _lastName, _classroomID);
+        admin.deleteUser(stud);
+        admin.addUser(stud);
+    }
+
+    public void deleteUser(String _username) {
+        Student stud = new Student(_username, "", "", "");
+        admin.deleteUser(stud);
     }
 
     public void createStudent(String _username, String _firstName, String _lastName, String _classroomID) {
@@ -80,7 +92,6 @@ public class ServiceClass {
         Quiz quiz = new Quiz();
         admin.addQuiz(quiz);
     }
-
 
     public void addQuestionToQuiz(Question question, int quizID) {
         for(int i = 0; i < quizList.size(); i++) {

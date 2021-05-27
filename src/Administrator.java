@@ -20,6 +20,20 @@ public class Administrator extends User {
         reader = Reader.getInstance();
     }   
 
+    public void deleteUser(User user) {
+        reader.audit("deleteUser");
+        userList.remove(user);
+
+        if(user instanceof Student) {
+            Student stud = (Student) user;
+            for(int i = 0; i < classroomList.size(); i++) {
+                if(classroomList.get(i).getClassroomID() == stud.getClassroomID()) {
+                    classroomList.get(i).deleteStudent(stud);
+                }
+            }
+        }
+    }
+
     public void addUser(User user) {
         reader.audit("addUser");
         userList.add(user);

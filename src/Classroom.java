@@ -13,6 +13,18 @@ public class Classroom {
         students.add(student);
     }
 
+    void deleteStudent(Student student) {
+        int index = -1;
+        for(int i = 0; i < students.size(); i++) {
+            if(students.get(i).getUsername().equals(student.getUsername())) {
+                index = i;
+            }
+        }
+        if(index != -1) {
+            students.remove(index);
+        }
+    }
+
     String getClassroomID() {
         return this.classroomID;
     }
