@@ -5,9 +5,9 @@ import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class Reader {
+public class ReaderWriter {
 
-    private static Reader instance = null;
+    private static ReaderWriter instance = null;
 
     private File fClassroom;
     private File fQuestion;
@@ -15,7 +15,7 @@ public class Reader {
     private File fStudent;
     private File fAudit;
 
-    private Reader() {
+    private ReaderWriter() {
         this.fClassroom = new File("csv/classroom.csv");
         this.fQuestion = new File("csv/question.csv");
         this.fInstructor = new File("csv/instructor.csv");
@@ -23,9 +23,9 @@ public class Reader {
         this.fAudit = new File("csv/audit.csv");
     }
 
-    public static Reader getInstance() {
+    public static ReaderWriter getInstance() {
         if(instance == null) {
-            instance = new Reader();
+            instance = new ReaderWriter();
         }
         return instance;
     }

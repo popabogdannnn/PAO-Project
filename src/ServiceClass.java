@@ -30,6 +30,18 @@ public class ServiceClass {
         }
     }
 
+    public void printStudents() {
+        for(User user : userList) {
+            if(user instanceof Student) {
+                Student student = (Student) user;
+                System.out.println(student.getUsername());
+                System.out.println(student.getFirstName());
+                System.out.println(student.getLastName());
+                System.out.println(student.getClassroomID());
+            }
+        }
+    }
+
     public void updateStudent(String _username, String _firstName, String _lastName, String _classroomID) {
         Student stud = new Student(_username, _firstName, _lastName, _classroomID);
         admin.deleteUser(stud);
@@ -107,7 +119,7 @@ public class ServiceClass {
     }
 
     public void loadData() {
-        Reader reader = Reader.getInstance();
+        ReaderWriter reader = ReaderWriter.getInstance();
 
         ArrayList<String[]> r = reader.readClassrooms();
         for(String[] line : r) {
@@ -131,7 +143,7 @@ public class ServiceClass {
     }
 
     public void saveData() {
-        Reader reader = Reader.getInstance();
+        ReaderWriter reader = ReaderWriter.getInstance();
 
         ArrayList<String> csvClassroom = new ArrayList<String>();
         for(int i = 0; i < classroomList.size(); i++) {
@@ -228,11 +240,16 @@ public class ServiceClass {
                     "student"
             };
 
+
+
             for(String d : databases) {
-                String query = "insert ignore into " + d + " VALUES ";
+                String query = "truncate table " + d;
+                var statement = conn.prepareStatement(query);
+                statement.execute();
+                query = "insert ignore into " + d + " VALUES ";
                 if(d == "classroom") {
                     for(int i = 0; i < classroomList.size(); i++) {
-                        var statement = conn.prepareStatement(query + "('" + classroomList.get(i).getClassroomID() + "')");
+                        statement = conn.prepareStatement(query + "('" + classroomList.get(i).getClassroomID() + "')");
                         statement.execute();
                     }
                 }
@@ -240,7 +257,7 @@ public class ServiceClass {
                 if(d == "instructor") {
                     for(User u : userList) {
                         if(u instanceof Instructor) {
-                            var statement = conn.prepareStatement(query + "('" + u.getUsername() + "','" + u.getFirstName() + "','" + u.getLastName() + "')");
+                            statement = conn.prepareStatement(query + "('" + u.getUsername() + "','" + u.getFirstName() + "','" + u.getLastName() + "')");
                             statement.execute();
                         }
                     }
@@ -249,7 +266,7 @@ public class ServiceClass {
                 if(d == "student") {
                     for(User u : userList) {
                         if(u instanceof Student) {
-                            var statement = conn.prepareStatement(query + "('" + u.getUsername() + "','" + u.getFirstName() + "','" + u.getLastName() + "','" + ((Student) u).getClassroomID() + "')");
+                            statement = conn.prepareStatement(query + "('" + u.getUsername() + "','" + u.getFirstName() + "','" + u.getLastName() + "','" + ((Student) u).getClassroomID() + "')");
                             statement.execute();
                         }
                     }
@@ -257,7 +274,7 @@ public class ServiceClass {
 
                 if(d == "question") {
                     for(Question q : questionList) {
-                        var statement = conn.prepareStatement(query + "('" + q.getStatement() + "','" + q.getCorrectAnswer() + "')");
+                        statement = conn.prepareStatement(query + "('" + q.getStatement() + "','" + q.getCorrectAnswer() + "')");
                         statement.execute();
                     }
                 }

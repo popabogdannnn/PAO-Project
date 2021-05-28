@@ -19,6 +19,7 @@ public class Main {
             System.out.println("quit: Incheie executia");
             read = scanner.nextLine();
 
+
             if(read.equals(new String("insert"))) {
                 System.out.print("username = ");
                 String username = scanner.nextLine();
